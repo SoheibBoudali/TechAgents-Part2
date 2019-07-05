@@ -1,14 +1,19 @@
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
 import jade.core.behaviours.Behaviour;
 
 public class ComportementAch extends Behaviour{
 	Acheteur acheteur;
-	public ComportementAch(Acheteur agent) {
+	Interface in;
+	public ComportementAch(Acheteur agent,Interface interf ) {
 		acheteur=agent;
+		in=interf;
 	}
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-		System.out.println(acheteur.getLocalName());
+		in.getNomVendeur().setText("Hello");
 	}
 
 	@Override

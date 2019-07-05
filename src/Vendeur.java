@@ -2,6 +2,8 @@ import jade.core.Agent;
 
 public class Vendeur extends Agent{
 	protected void setup() {
-		addBehaviour(new ComportementVend(this));
+		Object[] ArgsVend = getArguments();
+		Interface in = (Interface) ArgsVend[5];
+		addBehaviour(new ComportementVend(this,in));
 	}
 }

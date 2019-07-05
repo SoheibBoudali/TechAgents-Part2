@@ -44,9 +44,7 @@ public class Interface extends JFrame {
 	private JTextField Prix_Max_Min;
 	private JTextField Prix_Max_Max;
 	
-	public 	JTextField getNomVend() {
-		return NomVendeur; 
-	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -276,11 +274,12 @@ public class Interface extends JFrame {
 			Mise =   (float) Math.floor(Math.random() * (MaxMise - MinMise) + MinMise);
 			MaxPrix =  (float) Math.floor(Math.random() * (MaxPrixMax - MaxPrixMin) + MaxPrixMin);
 			
-			Object[] Argument_Ach =new Object[4];
+			Object[] Argument_Ach =new Object[5];
 			Argument_Ach[0]= Nom_Vend;
 			Argument_Ach[1]= VendPrixInit;
 			Argument_Ach[2]= Mise;
 			Argument_Ach[3]= MaxPrix;
+			Argument_Ach[4]= this;
 			
 			if(VendPrixInit < MaxPrix) {
 				ListeNomAcheteurs.add("Ach"+j);
@@ -303,12 +302,13 @@ public class Interface extends JFrame {
 			}
 		}
 		
-		Object[] Argument_Vend = new Object[5];	
+		Object[] Argument_Vend = new Object[6];	
 		Argument_Vend[0]=VendPrixInit;
 		Argument_Vend[1]=VendPrixRes;
 		Argument_Vend[2]=Nom_Prod;
 		Argument_Vend[3]=NbrItr;
 		Argument_Vend[4]=ListeNomAcheteurs;
+		Argument_Vend[5]=this;
 		
 		AgentController Vendeur;
 		try {
@@ -319,4 +319,101 @@ public class Interface extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTextField getTextField_1() {
+		return textField_1;
+	}
+
+	public void setTextField_1(JTextField textField_1) {
+		this.textField_1 = textField_1;
+	}
+
+	public JTextField getNomVendeur() {
+		return NomVendeur;
+	}
+
+	public void setNomVendeur(JTextField nomVendeur) {
+		NomVendeur = nomVendeur;
+	}
+
+	public JTextField getNomProduit() {
+		return NomProduit;
+	}
+
+	public void setNomProduit(JTextField nomProduit) {
+		NomProduit = nomProduit;
+	}
+
+	public JTextField getVend_Prix_Init() {
+		return Vend_Prix_Init;
+	}
+
+	public void setVend_Prix_Init(JTextField vend_Prix_Init) {
+		Vend_Prix_Init = vend_Prix_Init;
+	}
+
+	public JTextField getVend_Prix_Reserve() {
+		return Vend_Prix_Reserve;
+	}
+
+	public void setVend_Prix_Reserve(JTextField vend_Prix_Reserve) {
+		Vend_Prix_Reserve = vend_Prix_Reserve;
+	}
+
+	public JTextField getNombre_itération() {
+		return nombre_itération;
+	}
+
+	public void setNombre_itération(JTextField nombre_itération) {
+		this.nombre_itération = nombre_itération;
+	}
+
+	public JTextField getNbr_Acheteur() {
+		return Nbr_Acheteur;
+	}
+
+	public void setNbr_Acheteur(JTextField nbr_Acheteur) {
+		Nbr_Acheteur = nbr_Acheteur;
+	}
+
+	public JTextField getMin_Mise() {
+		return Min_Mise;
+	}
+
+	public void setMin_Mise(JTextField min_Mise) {
+		Min_Mise = min_Mise;
+	}
+
+	public JTextField getMax_Mise() {
+		return Max_Mise;
+	}
+
+	public void setMax_Mise(JTextField max_Mise) {
+		Max_Mise = max_Mise;
+	}
+
+	public JTextField getPrix_Max_Min() {
+		return Prix_Max_Min;
+	}
+
+	public void setPrix_Max_Min(JTextField prix_Max_Min) {
+		Prix_Max_Min = prix_Max_Min;
+	}
+
+	public JTextField getPrix_Max_Max() {
+		return Prix_Max_Max;
+	}
+
+	public void setPrix_Max_Max(JTextField prix_Max_Max) {
+		Prix_Max_Max = prix_Max_Max;
+	}
+	
 }
