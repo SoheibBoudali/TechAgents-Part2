@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -9,73 +10,67 @@ import jade.lang.acl.ACLMessage;
 public class ComportementVend extends Behaviour{
 	Vendeur vendeur;	
 	Interface in ;
-	public static int cpt =1;
+	public static int cpt =0;
 	public static float prix;
 	public float receive ;
-	ArrayList <ACLMessage> Message = new ArrayList<ACLMessage>();
+	public static int j=0;
+	public static ArrayList<String> Liste ;
 	public ComportementVend(Vendeur agent , Interface in ) {
 		this.in=in;
 		this.vendeur=agent;
 		prix=vendeur.getVendPrixInit();
+		Liste = vendeur.getListeNomAcheteurs();
 	}
+	
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-		ACLMessage Amsg ;
-		while(vendeur.receive()==null);
-		Amsg=vendeur.receive();
-		Message.add(Amsg);
-		System.out.println("Jai recu "+Amsg.getContent());
-		while(Message.size()!= vendeur.ListeNomAcheteurs.size());
-		/*for (int i = 0; i < Message.size(); i++) {
-			ACLMessage M = Message.get(i);
-			System.out.println(M.getContent());
-		}
-		/*while((Amsg=vendeur.receive())==null || cpt <vendeur.getListeNomAcheteurs().size());
-		receive= Float.valueOf(Amsg.getContent()).floatValue();
-		if(prix< receive) {
-			prix=receive;
-		}
-		System.out.println("nv prix"+prix);
-			/*if(prix< receive) 
-				prix = receive;
-		System.out.println("le nv prix est "+prix);
-		cpt=0;
-		
-		/*cpt++;
-		while(cpt<Liste_Ach.size());
-		if(this.prix_init< Float.valueOf(Amsg.getContent()).floatValue()) {
-			this.prix_init =Float.valueOf(Amsg.getContent()).floatValue();
-		}
+		ACLMessage Amsg = vendeur.blockingReceive();
 		if(Amsg.getContent().equals("-1")) {
-			for (int i = 0; i < Liste_Ach.size() ;i++) {
-				if(Liste_Ach.get(i).equals(Amsg.getSender().getLocalName())) {
-					Liste_Ach.remove(i);
+			System.out.println("MAJ");
+			for (int i = 0; i < Liste.size(); i++) {
+				if(Amsg.getSender().getLocalName().equals(Liste.get(i))) {
+					Liste.remove(i);
 				}
 			}
+		}else {
+			System.out.println("Jai recu "+Amsg.getContent());
+			cpt++;
+			System.out.println(cpt+"=="+Liste.size());
+			receive= Float.valueOf(Amsg.getContent()).floatValue();
+			if(prix< receive) {
+				prix=receive;
+			}
 		}
-		int i=0;
-		for ( i = 0; i < Liste_Ach.size(); i++) {
-			ACLMessage Vmsg =new ACLMessage(ACLMessage.INFORM);
-			Vmsg.addReceiver(new AID(Liste_Ach.get(i),AID.ISLOCALNAME));
-			Vmsg.setContent(String.valueOf(this.prix_init));
-			vendeur.send(Vmsg);
+		if (cpt==(Liste.size())) {
+			if(Liste.size()==1 && !Amsg.getContent().equals("-1")) {
+				if(receive>vendeur.getVendPrixRes()) {
+					in.getResultat().setText("Produit vendu a l'agent "+Amsg.getSender().getLocalName()+" au prix de "+Amsg.getContent());
+					vendeur.doDelete();
+				}else {
+					in.getResultat().setText("Fin d'enchere produit non vendu ");
+					vendeur.doDelete();
+				}
+			}else {
+				for ( int i = 0; i < Liste.size(); i++) {
+					ACLMessage Vmsg =new ACLMessage(ACLMessage.INFORM);
+					Vmsg.addReceiver(new AID(Liste.get(i),AID.ISLOCALNAME));
+					Vmsg.setContent(String.valueOf(prix));
+					vendeur.send(Vmsg);
+				}
+				block();
+				cpt=0;
+			}
+			if(Liste.size()==0) {
+				in.getResultat().setText("Fin d'enchere Produit non vendu");
+				vendeur.doDelete();
+			}
 		}
-		cpt=0;
-		if(i==0) {
-			System.out.println("Produit non vendu");
-			vendeur.doDelete();
-		}
-		if(i==1 && this.prix_reserve < this.prix_init) {
-			System.out.println("Produit vendu");
-			vendeur.doDelete();
-		}*/
 	}
 
 	@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
-
 		return false;
 	}
 

@@ -31,17 +31,20 @@ public class ComportementAch extends Behaviour{
 			acheteur.send(Amsg);
 			acheteur.doDelete();
 		}
-		/*ACLMessage Vmsg =new ACLMessage(ACLMessage.INFORM);
-		while((Vmsg=acheteur.receive()) == null);
-		System.out.println("je suis l'agent "+ acheteur.getLocalName() +"j'ai recu le nv prix "+Vmsg.getContent());
-		prix=Float.valueOf(Vmsg.getContent()).floatValue();*/
+		this.block();
+		ACLMessage Vmsg = acheteur.blockingReceive();
+		//ACLMessage Vmsg = acheteur.receive();
+		//if(Vmsg!=null) {
+			System.out.println("je suis l'agent "+ acheteur.getLocalName() +"j'ai recu le nv prix "+Vmsg.getContent());
+			prix=Float.valueOf(Vmsg.getContent()).floatValue();
+		//}	
 	}
 
 
 	@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 }

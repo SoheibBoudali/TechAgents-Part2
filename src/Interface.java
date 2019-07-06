@@ -32,7 +32,7 @@ import java.awt.SystemColor;
 public class Interface extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
+	private JTextField Resultat;
 	private JTextField NomVendeur;
 	private JTextField NomProduit;
 	private JTextField Vend_Prix_Init;
@@ -95,10 +95,10 @@ public class Interface extends JFrame {
 		label.setBounds(60, 527, 74, 32);
 		contentPane.add(label);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(152, 565, 535, 58);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		Resultat = new JTextField();
+		Resultat.setBounds(152, 565, 535, 58);
+		contentPane.add(Resultat);
+		Resultat.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Système d'enchère");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
@@ -323,12 +323,12 @@ public class Interface extends JFrame {
 	}
 
 	
-	public JTextField getTextField_1() {
-		return textField_1;
+	public JTextField getResultat() {
+		return Resultat;
 	}
 
-	public void setTextField_1(JTextField textField_1) {
-		this.textField_1 = textField_1;
+	public void setResultat(JTextField Resultat) {
+		this.Resultat = Resultat;
 	}
 
 	public JTextField getNomVendeur() {
