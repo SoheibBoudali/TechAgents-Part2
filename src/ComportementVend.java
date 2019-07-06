@@ -12,19 +12,27 @@ public class ComportementVend extends Behaviour{
 	public static int cpt =1;
 	public static float prix;
 	public float receive ;
+	ArrayList <ACLMessage> Message = new ArrayList<ACLMessage>();
 	public ComportementVend(Vendeur agent , Interface in ) {
 		this.in=in;
 		this.vendeur=agent;
 		prix=vendeur.getVendPrixInit();
 	}
-	
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
-		ACLMessage Amsg ;cpt++;
-		while((Amsg=vendeur.receive())==null);
+		ACLMessage Amsg ;
+		while(vendeur.receive()==null);
+		Amsg=vendeur.receive();
+		Message.add(Amsg);
+		System.out.println("Jai recu "+Amsg.getContent());
+		while(Message.size()!= vendeur.ListeNomAcheteurs.size());
+		/*for (int i = 0; i < Message.size(); i++) {
+			ACLMessage M = Message.get(i);
+			System.out.println(M.getContent());
+		}
+		/*while((Amsg=vendeur.receive())==null || cpt <vendeur.getListeNomAcheteurs().size());
 		receive= Float.valueOf(Amsg.getContent()).floatValue();
-		while(cpt <vendeur.getListeNomAcheteurs().size())
 		if(prix< receive) {
 			prix=receive;
 		}
