@@ -43,6 +43,7 @@ public class Interface extends JFrame {
 	private JTextField Max_Mise;
 	private JTextField Prix_Max_Min;
 	private JTextField Prix_Max_Max;
+	private JTextArea Execution;
 	
 
 	/**
@@ -231,7 +232,7 @@ public class Interface extends JFrame {
 		lblMax_1.setBounds(802, 250, 66, 15);
 		contentPane.add(lblMax_1);
 		
-		JTextArea Execution = new JTextArea();
+		Execution = new JTextArea();
 		Execution.setEnabled(false);
 		Execution.setLineWrap(true);
 		Execution.setBounds(152, 336, 787, 177);
@@ -269,27 +270,28 @@ public class Interface extends JFrame {
 		float MaxPrixMax = Float.valueOf(Prix_Max_Max.getText()).floatValue();
 		float MaxPrix;
 		
-		int j= 1;
 		for (int i = 0; i < NbrAch ; i++) {
 			Mise =   (float) Math.floor(Math.random() * (MaxMise - MinMise) + MinMise);
 			MaxPrix =  (float) Math.floor(Math.random() * (MaxPrixMax - MaxPrixMin) + MaxPrixMin);
 			
-			Object[] Argument_Ach =new Object[5];
+			Object[] Argument_Ach =new Object[6];
 			Argument_Ach[0]= Nom_Vend;
 			Argument_Ach[1]= VendPrixInit;
 			Argument_Ach[2]= Mise;
 			Argument_Ach[3]= MaxPrix;
 			Argument_Ach[4]= this;
+			Argument_Ach[5]=NbrAch;
 			
 			if(VendPrixInit < MaxPrix) {
-				ListeNomAcheteurs.add("Ach"+j);
+				ListeNomAcheteurs.add("Ach"+i);
 				try {
-					acheteurs.add(CC.createNewAgent("Ach"+j,"Acheteur",Argument_Ach));
+					acheteurs.add(CC.createNewAgent("Ach"+i,"Acheteur",Argument_Ach));
 				} catch (StaleProxyException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				j++;
+			}else {
+				System.out.println("je suis l'acheteur Ach"+i+" mon prix max :"+ MaxPrix+" est inferieur au prix initial"+ VendPrixInit +"je ne rentre pas dans l'enchere" );
 			}
 		}
 		
@@ -320,14 +322,7 @@ public class Interface extends JFrame {
 		}
 	}
 
-	public JPanel getContentPane() {
-		return contentPane;
-	}
-
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
-
+	
 	public JTextField getTextField_1() {
 		return textField_1;
 	}
@@ -415,5 +410,14 @@ public class Interface extends JFrame {
 	public void setPrix_Max_Max(JTextField prix_Max_Max) {
 		Prix_Max_Max = prix_Max_Max;
 	}
+
+	public JTextArea getExecution() {
+		return Execution;
+	}
+
+	public void setExecution(JTextArea execution) {
+		Execution = execution;
+	}
+	
 	
 }
