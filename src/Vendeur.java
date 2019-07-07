@@ -8,7 +8,7 @@ public class Vendeur extends Agent{
 	private String Nom_Prod;
 	private int  NbrItr;
 	ArrayList<String>  ListeNomAcheteurs;
-	protected void setup() {
+	protected void setup() { 
 		Object[] ArgsVend = getArguments();
 		VendPrixInit =Float.valueOf(String.valueOf(ArgsVend[0])).floatValue();
 		VendPrixRes =Float.valueOf(String.valueOf(ArgsVend[1])).floatValue();

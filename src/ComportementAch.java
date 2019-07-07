@@ -9,10 +9,12 @@ public class ComportementAch extends Behaviour{
 	Acheteur acheteur;
 	Interface in;
 	public static float prix;
+	static String Text="";
+	String Newligne=System.getProperty("line.separator");
 	public ComportementAch(Acheteur agent,Interface in ) {
 		acheteur=agent;
 		prix=acheteur.getVendPrixInit();
-		this.in=in;
+		this.in=in; 
 		
 	}
 	 
@@ -24,20 +26,31 @@ public class ComportementAch extends Behaviour{
 		if((prix + acheteur.getMise())< acheteur.getMaxPrix() ) {
 			Amsg.setContent(String.valueOf(prix+acheteur.getMise()));
 			acheteur.send(Amsg);
-			System.out.println("je suis l'agent  "+acheteur.getLocalName()+" j'ai proposé le prix suivant :" +Amsg.getContent());
+			System.out.println(acheteur.getLocalName()+" : j'ai proposé le prix suivant :" +Amsg.getContent());
+			Text=Text+Newligne+acheteur.getLocalName()+" : j'ai proposé le prix suivant :" +Amsg.getContent();
 		}else {
-			System.out.println("je suis "+ acheteur.getLocalName() +"je sors de l'enchere");
+			System.out.println(acheteur.getLocalName()+" : je sors de l'enchere");
+			Text=Text+Newligne+acheteur.getLocalName()+" : je sors de l'enchere";
 			Amsg.setContent("-1");
 			acheteur.send(Amsg);
 			acheteur.doDelete();
 		}
-		this.block();
+		this.block(); 
 		ACLMessage Vmsg = acheteur.blockingReceive();
-		//ACLMessage Vmsg = acheteur.receive();
-		//if(Vmsg!=null) {
-			System.out.println("je suis l'agent "+ acheteur.getLocalName() +"j'ai recu le nv prix "+Vmsg.getContent());
+			System.out.println(acheteur.getLocalName()+" : j'ai recu le nouveau prix :"+Vmsg.getContent());
+			Text=Text+Newligne+acheteur.getLocalName()+" : j'ai recu le nouveau prix :"+Vmsg.getContent();
 			prix=Float.valueOf(Vmsg.getContent()).floatValue();
-		//}	
+		/*try {
+			ACLMessage fin = new ACLMessage(ACLMessage.INFORM); 
+			String A="";
+			if((A=fin.getContent()).equals("fin")&& fin!=null) {
+				in.getExecutionAch().setText(Text);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+
 	}
 
 

@@ -15,6 +15,8 @@ public class ComportementVend extends Behaviour{
 	public float receive ;
 	public static int j=0;
 	public static ArrayList<String> Liste ;
+	static String Text="";
+	String Newligne=System.getProperty("line.separator");
 	public ComportementVend(Vendeur agent , Interface in ) {
 		this.in=in;
 		this.vendeur=agent;
@@ -27,16 +29,16 @@ public class ComportementVend extends Behaviour{
 		// TODO Auto-generated method stub
 		ACLMessage Amsg = vendeur.blockingReceive();
 		if(Amsg.getContent().equals("-1")) {
-			System.out.println("MAJ");
 			for (int i = 0; i < Liste.size(); i++) {
 				if(Amsg.getSender().getLocalName().equals(Liste.get(i))) {
+					Text=Text+Newligne+"L'acheteur Ach"+i+" a quitté l'enchere";
 					Liste.remove(i);
 				}
 			}
 		}else {
-			System.out.println("Jai recu "+Amsg.getContent());
-			cpt++;
-			System.out.println(cpt+"=="+Liste.size());
+			Text=Text+Newligne+Amsg.getSender().getLocalName()+" : j'ai proposé le prix "+Amsg.getContent();
+			Text=Text+Newligne+"Vendeur : j'ai recu "+Amsg.getContent()+" de la part de :"+Amsg.getSender().getLocalName();
+			cpt++; 
 			receive= Float.valueOf(Amsg.getContent()).floatValue();
 			if(prix< receive) {
 				prix=receive;
@@ -45,9 +47,15 @@ public class ComportementVend extends Behaviour{
 		if (cpt==(Liste.size())) {
 			if(Liste.size()==1 && !Amsg.getContent().equals("-1")) {
 				if(receive>vendeur.getVendPrixRes()) {
-					in.getResultat().setText("Produit vendu a l'agent "+Amsg.getSender().getLocalName()+" au prix de "+Amsg.getContent());
+					in.getExecutionVend().setText(Text); 
+					in.getResultat().setText("Produit vendu a l'agent :"+Amsg.getSender().getLocalName()+" au prix de :"+Amsg.getContent());
+                    /*ACLMessage fin = Amsg.createReply();
+                    fin.setPerformative( ACLMessage.INFORM );
+                    fin.setContent("fin" );
+                    vendeur.send(fin);*/
 					vendeur.doDelete();
 				}else {
+					in.getExecutionVend().setText(Text); 
 					in.getResultat().setText("Fin d'enchere produit non vendu ");
 					vendeur.doDelete();
 				}
@@ -56,6 +64,7 @@ public class ComportementVend extends Behaviour{
 					ACLMessage Vmsg =new ACLMessage(ACLMessage.INFORM);
 					Vmsg.addReceiver(new AID(Liste.get(i),AID.ISLOCALNAME));
 					Vmsg.setContent(String.valueOf(prix));
+					Text=Text+Newligne+"Vendeur : j'ai envoyé le nouveau prix "+prix+" a l'acheteur "+Liste.get(i);
 					vendeur.send(Vmsg);
 				}
 				block();

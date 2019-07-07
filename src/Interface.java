@@ -43,9 +43,9 @@ public class Interface extends JFrame {
 	private JTextField Max_Mise;
 	private JTextField Prix_Max_Min;
 	private JTextField Prix_Max_Max;
-	private JTextArea Execution;
-	
-
+	private JTextArea ExecutionVend;
+	String Text="";
+	String Newligne=System.getProperty("line.separator");
 	/**
 	 * Launch the application.
 	 */
@@ -85,9 +85,9 @@ public class Interface extends JFrame {
 		});
 
 		
-		JLabel lblNewLabel = new JLabel("Enchere :");
+		JLabel lblNewLabel = new JLabel("Enchere ");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(60, 312, 74, 32);
+		lblNewLabel.setBounds(104, 306, 74, 32);
 		contentPane.add(lblNewLabel);
 		
 		JLabel label = new JLabel("Resultat :");
@@ -96,7 +96,10 @@ public class Interface extends JFrame {
 		contentPane.add(label);
 		
 		Resultat = new JTextField();
-		Resultat.setBounds(152, 565, 535, 58);
+		Resultat.setFont(new Font("Droid Sans", Font.BOLD, 24));
+		Resultat.setCaretColor(Color.BLACK);
+		Resultat.setEnabled(false);
+		Resultat.setBounds(152, 565, 588, 58);
 		contentPane.add(Resultat);
 		Resultat.setColumns(10);
 		
@@ -166,7 +169,7 @@ public class Interface extends JFrame {
 		nombre_itération.setColumns(10);
 		nombre_itération.setBounds(217, 287, 96, 19);
 		contentPane.add(nombre_itération);
-		
+		 
 		Nbr_Acheteur = new JTextField();
 		Nbr_Acheteur.setText("5");
 		Nbr_Acheteur.setColumns(10);
@@ -232,15 +235,16 @@ public class Interface extends JFrame {
 		lblMax_1.setBounds(802, 250, 66, 15);
 		contentPane.add(lblMax_1);
 		
-		Execution = new JTextArea();
-		Execution.setEnabled(false);
-		Execution.setLineWrap(true);
-		Execution.setBounds(152, 336, 787, 177);
-		contentPane.add(Execution);
 
-		JScrollPane scrollPane = new JScrollPane(Execution);
-		scrollPane.setBounds(152, 336, 787, 177);
-		contentPane.add(scrollPane);
+		ExecutionVend = new JTextArea();
+		ExecutionVend.setFont(new Font("Dialog", Font.BOLD, 16));
+		ExecutionVend.setEnabled(false);
+		ExecutionVend.setBounds(150, 336, 600, 177);
+		contentPane.add(ExecutionVend);
+		
+		JScrollPane scrollPaneVend = new JScrollPane(ExecutionVend);
+		scrollPaneVend.setBounds(150, 336, 700, 177);
+		contentPane.add(scrollPaneVend);
 		
 		Run.setBounds(857, 581, 114, 25);
 		contentPane.add(Run);
@@ -291,7 +295,8 @@ public class Interface extends JFrame {
 					e.printStackTrace();
 				}
 			}else {
-				System.out.println("je suis l'acheteur Ach"+i+" mon prix max :"+ MaxPrix+" est inferieur au prix initial"+ VendPrixInit +"je ne rentre pas dans l'enchere" );
+				Text = Text+Newligne+"je suis l'acheteur Ach"+i+Newligne+" mon prix max :"+ MaxPrix+" est inferieur au prix initial"+ VendPrixInit+Newligne+"je ne rentre pas dans l'enchere";
+				System.out.println(Text);
 			}
 		}
 		
@@ -322,7 +327,7 @@ public class Interface extends JFrame {
 		}
 	}
 
-	
+
 	public JTextField getResultat() {
 		return Resultat;
 	}
@@ -411,13 +416,14 @@ public class Interface extends JFrame {
 		Prix_Max_Max = prix_Max_Max;
 	}
 
-	public JTextArea getExecution() {
-		return Execution;
+
+	public JTextArea getExecutionVend() {
+		return ExecutionVend;
 	}
 
-	public void setExecution(JTextArea execution) {
-		Execution = execution;
+	public void setExecutionVend(JTextArea executionVend) {
+		ExecutionVend = executionVend;
 	}
-	
+
 	
 }

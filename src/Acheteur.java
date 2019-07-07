@@ -6,7 +6,7 @@ import jade.core.Agent;
 public class Acheteur extends Agent{
 	private String Nom_Vend;
 	private float VendPrixInit;
-	private float Mise;
+	private float Mise; 
 	private float  MaxPrix;
 	private int NbrAch;
 	String Newligne=System.getProperty("line.separator");
@@ -18,7 +18,7 @@ public class Acheteur extends Agent{
 		MaxPrix=Float.valueOf(String.valueOf(ArgsAch[3])).floatValue();
 		NbrAch=Integer.valueOf(String.valueOf(ArgsAch[5])).intValue();
 		Interface in = (Interface) ArgsAch[4];
-		System.out.println("je suis" +getLocalName()+" mon prix max est "+MaxPrix+" Dollars, Je suis pret pour l'enchere");
+		System.out.println(getLocalName()+" : Mon prix max est "+MaxPrix+" et ma mise est :"+Mise+" Je suis pret pour l'enchere");
 		addBehaviour(new ComportementAch(this,in));
 	}
 	public String getNom_Vend() {
